@@ -7,11 +7,6 @@ import { TopPageModel } from './top-page.model';
 export class TopPageController {
 	constructor(private readonly configService: ConfigService) {}
 
-	@Get('get/:alies')
-	async get(@Param('alies') alies: string): Promise<TopPageModel> {
-		this.configService.get('TEST');
-	}
-
 	@Post('create')
 	async create(@Body() dto: Omit<TopPageModel, '_id'>) {}
 
