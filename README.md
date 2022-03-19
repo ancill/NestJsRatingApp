@@ -14,3 +14,5 @@
 ### Install typegoose for nestjs
 
 npm i @typegoose/typegoose mongoose nestjs-typegoose
+
+mongodb://admin:admin@localhost:27017/admin
