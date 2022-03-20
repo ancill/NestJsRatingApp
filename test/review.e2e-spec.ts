@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { CreateReviewDto } from 'src/review/dto/create-review.dto';
-import { Types } from 'mongoose';
+import { Types, disconnect } from 'mongoose';
 
 const productId = new Types.ObjectId().toHexString();
 
@@ -28,7 +28,7 @@ describe('AppController (e2e)', () => {
 		await app.init();
 	});
 
-	it('/review/create (POST)', async (done) => {
+	it('/review/create (POST) - success', async () => {
 		return request(app.getHttpServer())
 			.post('/review/create')
 			.send(testDto)
@@ -36,7 +36,16 @@ describe('AppController (e2e)', () => {
 			.then(({ body }: request.Response) => {
 				createdId = body._id;
 				expect(createdId).toBeDefined();
-				done();
 			});
+	});
+
+	it('/review/:id (DELETE) - success', () => {
+		return request(app.getHttpServer())
+			.delete('/review/' + createdId)
+			.expect(200);
+	});
+
+	afterAll(() => {
+		disconnect();
 	});
 });
