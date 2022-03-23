@@ -3,7 +3,7 @@ import { ModelType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
 import { AuthDto } from './dto/auth.dto';
 import { UserModel } from './user.model';
-import { genSalt, hash, compare } from 'bcryptjs';
+import { genSalt, hash, compare, getSalt } from 'bcryptjs';
 import { USER_NOT_FOUND, WRONG_PASSWORD_ERROR } from './auth.constants';
 import { JwtService } from '@nestjs/jwt';
 @Injectable()
