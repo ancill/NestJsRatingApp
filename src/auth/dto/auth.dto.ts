@@ -4,6 +4,6 @@ export class AuthDto {
 	@IsString()
 	login: string;
 
-	@isString()
+	@IsString()
 	password: string;
 }
