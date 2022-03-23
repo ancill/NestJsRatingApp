@@ -16,3 +16,9 @@
 npm i @typegoose/typegoose mongoose nestjs-typegoose
 
 mongodb://admin:admin@localhost:27017/admin
+
+## doctor.js
+
+npm install -g clinic
+npm build
+clinic doctor --on-port "autocannon localhost:$PORT/api/review/byProduct/6236155460d91e8673e5c0c7" -- node dist/main.js
