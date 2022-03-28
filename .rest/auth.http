@@ -1,0 +1,18 @@
+POST http://localhost:3000/api/auth/login
+content-type: application/json
+
+{
+	"login": "a2s@gmail.com",
+	"password": "1"
+}
+
+###
+
+POST http://localhost:3000/api/auth/register
+content-type: application/json
+
+{
+	"login": "a2s@gmail.com",
+	"password": "1"
+}
+

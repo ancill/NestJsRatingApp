@@ -1,0 +1,7 @@
+GET http://localhost:3000/api/review/byProduct/6236155460d91e8673e5c0c7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImEyc0BnbWFpbC5jb20iLCJpYXQiOjE2NDg0NjE2MzB9.EQ1YcZUnNxODVeI6qcgW10bExO9GT4a2ftJbsh772iE
+
+###
+
+GET http://localhost:3000/api/review/byProduct/6236155460d91e8673e5c0c7
+Authorization: {{token}}
