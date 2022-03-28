@@ -16,9 +16,15 @@ const testDto: CreateReviewDto = {
 	productId: productId,
 };
 
+const loginDto = {
+	login: 'a2s@gmail.com',
+	password: '1',
+};
+
 describe('AppController (e2e)', () => {
 	let app: INestApplication;
 	let createdId: string;
+	let token: string;
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -27,6 +33,9 @@ describe('AppController (e2e)', () => {
 
 		app = moduleFixture.createNestApplication();
 		await app.init();
+
+		const { body } = await request(app.getHttpServer()).post('/auth/login').send(loginDto);
+		token = body.access_token;
 	});
 
 	it('/review/create (POST) - success', async () => {
