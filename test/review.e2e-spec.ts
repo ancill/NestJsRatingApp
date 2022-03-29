@@ -87,12 +87,14 @@ describe('AppController (e2e)', () => {
 	it('/review/:id (DELETE) - success', () => {
 		return request(app.getHttpServer())
 			.delete('/review/' + createdId)
+			.set('Authorization', 'Bearer ' + token)
 			.expect(200);
 	});
 
 	it('/review/:id (DELETE) - fail', () => {
 		return request(app.getHttpServer())
 			.delete('/review/' + new Types.ObjectId().toHexString())
+			.set('Authorization', 'Bearer ' + token)
 			.expect(404, {
 				statusCode: 404,
 				message: REVIEW_NOT_FOUND,
