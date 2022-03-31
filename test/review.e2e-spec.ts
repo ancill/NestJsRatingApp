@@ -21,7 +21,7 @@ const loginDto = {
 	password: '1',
 };
 
-describe('AppController (e2e)', () => {
+describe('ReviewController (e2e)', () => {
 	let app: INestApplication;
 	let createdId: string;
 	let token: string;
@@ -62,7 +62,8 @@ describe('AppController (e2e)', () => {
 			.send({ ...testDto, rating: 0 })
 			.expect(400)
 			.then(({ body }: request.Response) => {
-				console.log(body);
+				const message = body.message[0];
+				expect(message).toBe('Rating cannot be less then 1');
 			});
 	});
 
