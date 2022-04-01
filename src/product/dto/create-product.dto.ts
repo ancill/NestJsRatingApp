@@ -9,7 +9,7 @@ class ProductCharacteristicDto {
 	value: string;
 }
 
-export class ProductCreateDto {
+export class CreateProductDto {
 	@IsString()
 	image: string;
 

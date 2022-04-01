@@ -5,6 +5,7 @@ import {
 	Get,
 	HttpException,
 	HttpStatus,
+	NotFoundException,
 	Param,
 	Post,
 	UseGuards,
@@ -38,6 +39,10 @@ export class ReviewController {
 
 	@Get('byProduct/:productId')
 	async getByProduct(@Param('productId') productId: string, @UserEmail() email: string) {
-		return this.reviewService.findByProductId(productId);
+		const product = this.reviewService.findByProductId(productId);
+		if (!product) {
+			throw new NotFoundException(REVIEW_NOT_FOUND);
+		}
+		return product;
 	}
 }
