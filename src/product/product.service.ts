@@ -21,8 +21,11 @@ export class ProductService {
 		return this.productModel.findByIdAndUpdate(id, dto, { new: true }).exec();
 	}
 
+	// TIP: always sort document when you using aggregation with limit
+
+	// lookup takes collection Review and use local field '_id'
+	// for search in productId and use review alias for return type
 	async findWithReviews(dto: FindProductDto) {
-		// Tip: always sort document when you using aggregation with limit
 		return this.productModel.aggregate([
 			{
 				$match: {
@@ -36,6 +39,19 @@ export class ProductService {
 			},
 			{
 				$limit: dto.limit,
+			},
+			{
+				$lookup: {
+					from: 'Review',
+					localField: '_id',
+					foreignField: 'productId',
+					as: 'review',
+				},
+			},
+			{
+				$addFields: {
+					reviewCount: { $size: '' },
+				},
 			},
 		]);
 	}
