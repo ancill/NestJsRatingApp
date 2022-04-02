@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
+import { ReviewModel } from 'src/review/review.model';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductDto } from './dto/find-product.dto';
 import { ProductModel } from './product.model';
@@ -26,33 +27,36 @@ export class ProductService {
 	// lookup takes collection Review and use local field '_id'
 	// for search in productId and use review alias for return type
 	async findWithReviews(dto: FindProductDto) {
-		return this.productModel.aggregate([
-			{
-				$match: {
-					categories: dto.category,
+		return this.productModel
+			.aggregate([
+				{
+					$match: {
+						categories: dto.category,
+					},
 				},
-			},
-			{
-				$sort: {
-					_id: 1,
+				{
+					$sort: {
+						_id: 1,
+					},
 				},
-			},
-			{
-				$limit: dto.limit,
-			},
-			{
-				$lookup: {
-					from: 'Review',
-					localField: '_id',
-					foreignField: 'productId',
-					as: 'review',
+				{
+					$limit: dto.limit,
 				},
-			},
-			{
-				$addFields: {
-					reviewCount: { $size: '' },
+				{
+					$lookup: {
+						from: 'Review',
+						localField: '_id',
+						foreignField: 'productId',
+						as: 'review',
+					},
 				},
-			},
-		]);
+				{
+					$addFields: {
+						reviewCount: { $size: '$review' }, // took from lookup review field and added it's count
+						reviewAvg: { $avg: '$review.rating' },
+					},
+				},
+			])
+			.exec()  as (ProductModel & { review: ReviewModel[], reviewCount: number, reviewAvg number })[];
 	}
 }
