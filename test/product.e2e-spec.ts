@@ -115,7 +115,7 @@ describe('ProductController (e2e)', () => {
 			});
 	});
 
-	// Mock review for this product
+	// Mock reviews for this product
 	it('/review/create (POST) - MOCK success', async () => {
 		const reviewTestDto: CreateReviewDto = {
 			name: 'test 1',
@@ -141,7 +141,7 @@ describe('ProductController (e2e)', () => {
 			.then(async ({ body }: request.Response) => {
 				const id_1 = body[0].reviews[0]._id;
 				const id_2 = body[0].reviews[1]._id;
-				// remove found review mocks
+				// check and remove found review mocks that we created early
 				await request(app.getHttpServer())
 					.delete('/review/' + id_1)
 					.set('Authorization', 'Bearer ' + token)
