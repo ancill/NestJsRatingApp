@@ -9,7 +9,7 @@ content-type: application/json
 	"credit": 12,
 	"description": "hello",
 	"advantages": "hello",
-	"disAdvantages": "hello",
+	"disAdvantages": "3",
 	"categories": ["apple"],
 	"tags": ["tag - 1"],
 	"characteristics": [{
@@ -21,3 +21,8 @@ content-type: application/json
 		"value": "3"
 	}]
 }
+
+###
+
+GET http://localhost:3000/api/product/624b2c2eec4a93d2b119bf24
+content-type: application/json

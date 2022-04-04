@@ -1,4 +1,5 @@
 import {
+	BadRequestException,
 	Body,
 	Controller,
 	Delete,
@@ -15,13 +16,14 @@ import {
 import { IdValidationPipe } from '../pipes/id-validation.pipe';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductDto } from './dto/find-product.dto';
-import { PRODUCT_NOT_FOUND } from './product.constants';
+import { PRODUCT_NOT_FOUND, PRODUCT_VALUES_BAD } from './product.constants';
 import { ProductService } from './product.service';
 
 @Controller('product')
 export class ProductController {
 	constructor(private readonly productService: ProductService) {}
 
+	@UsePipes(new ValidationPipe())
 	@Post('create')
 	async create(@Body() dto: CreateProductDto) {
 		return this.productService.create(dto);

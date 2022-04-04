@@ -8,7 +8,7 @@ import { REVIEW_NOT_FOUND } from '../src/review/review.constants';
 
 const productId = new Types.ObjectId().toHexString();
 
-const testDto: CreateReviewDto = {
+export const testDto: CreateReviewDto = {
 	name: 'TEST',
 	title: 'title',
 	description: 'descr for test',

@@ -49,13 +49,13 @@ export class ProductService {
 						from: 'Review',
 						localField: '_id',
 						foreignField: 'productId',
-						as: 'review',
+						as: 'reviews',
 					},
 				},
 				{
 					$addFields: {
-						reviewCount: { $size: '$review' }, // took from lookup review field and added it's count
-						reviewAvg: { $avg: '$review.rating' },
+						reviewCount: { $size: '$reviews' }, // took from lookup review field and added it's count
+						reviewAvg: { $avg: '$reviews.rating' },
 					},
 				},
 			])
