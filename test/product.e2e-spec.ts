@@ -120,7 +120,7 @@ describe('ProductController (e2e)', () => {
 		const reviewTestDto: CreateReviewDto = {
 			name: 'test 1',
 			title: 'title',
-			description: 'descr for test',
+			description: 'desk for test',
 			rating: 5,
 			productId: createdId,
 		};
