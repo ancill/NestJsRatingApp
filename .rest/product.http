@@ -1,0 +1,23 @@
+POST http://localhost:3000/api/product/create
+content-type: application/json
+
+{
+	"image": "1.png",
+	"title": "hello",
+	"price": 12,
+	"oldPrice": 12,
+	"credit": 12,
+	"description": "hello",
+	"advantages": "hello",
+	"disAdvantages": "hello",
+	"categories": ["apple"],
+	"tags": ["tag - 1"],
+	"characteristics": [{
+		"name": "first",
+		"value": "3"
+	},
+	{
+		"name": "first",
+		"value": "3"
+	}]
+}

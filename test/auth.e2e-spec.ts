@@ -6,7 +6,7 @@ import { AppModule } from '../src/app.module';
 import { Types, disconnect } from 'mongoose';
 import { REVIEW_NOT_FOUND } from '../src/review/review.constants';
 
-const loginDto = {
+export const loginDto = {
 	login: 'a2s@gmail.com',
 	password: '1',
 };

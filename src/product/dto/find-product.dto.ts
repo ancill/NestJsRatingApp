@@ -1,4 +1,6 @@
 import { IsNumber, IsString } from 'class-validator';
+import { ReviewModel } from 'src/review/review.model';
+import { ProductModel } from '../product.model';
 
 export class FindProductDto {
 	@IsString()
@@ -6,4 +8,10 @@ export class FindProductDto {
 
 	@IsNumber()
 	limit: number;
+}
+
+export class FindWithReviews extends ProductModel {
+	review: ReviewModel[];
+	reviewCount: number;
+	reviewAvg: number;
 }
