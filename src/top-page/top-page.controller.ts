@@ -57,7 +57,14 @@ export class TopPageController {
 		return updatedPage;
 	}
 
+	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
-	@Post()
-	async find(@Body() dto: FindTopPageDto) {}
+	@Post('find')
+	async find(@Body() dto: FindTopPageDto) {
+		const foundPage = await this.topPageService.findByCategory(dto);
+		if (!foundPage) {
+			throw new NotFoundException(TOP_PAGE_NOT_FOUNT);
+		}
+		return foundPage;
+	}
 }
