@@ -10,7 +10,7 @@ import { TOP_PAGE_NOT_FOUNT } from '../src/top-page/top-page.constants';
 const testDto: CreateTopPageDto = {
 	advantages: [{ description: 'test description', title: 'Test' }],
 	category: 'Blog',
-	alias: new Types.ObjectId().toHexString(),
+	alias: 'TOP_PRODUCT_ALIAS',
 	firstCategory: TopLevelCategoryDto.Courses,
 	secondCategory: 'secondCategory',
 	seoText: 'A lot of text',
@@ -79,6 +79,15 @@ describe('TopPageController (e2e)', () => {
 			});
 	});
 
+	it('/top-page/byAlias/:alias (GET) - success', async () => {
+		return request(app.getHttpServer())
+			.get('/top-page/byAlias/' + 'TOP_PRODUCT_ALIAS')
+			.expect(200)
+			.then(({ body }: request.Response) => {
+				expect(body.firstCategory).toBe(TopLevelCategoryDto.Courses);
+			});
+	});
+
 	it('/top-page/update (PATCH) - success', async () => {
 		return request(app.getHttpServer())
 			.patch('/top-page/' + createdId)
@@ -114,7 +123,7 @@ describe('TopPageController (e2e)', () => {
 			});
 	});
 
-	it('/product/find (GET) - success', async () => {
+	it('/top-page/find (GET) - success', async () => {
 		return request(app.getHttpServer())
 			.get('/product/find')
 			.send({ firstCategory: TopLevelCategoryDto.Courses })

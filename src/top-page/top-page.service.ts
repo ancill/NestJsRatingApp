@@ -17,6 +17,10 @@ export class TopPageService {
 		return this.topPageModel.findById(id).exec();
 	}
 
+	async findByAlias(alias: string) {
+		return this.topPageModel.findOne({ alias }).exec();
+	}
+
 	async deleteById(id: string) {
 		return this.topPageModel.findByIdAndDelete(id).exec();
 	}

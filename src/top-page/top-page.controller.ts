@@ -39,6 +39,15 @@ export class TopPageController {
 		return topPage;
 	}
 
+	@Get('byAlias/:alias')
+	async getByAlias(@Param('alias') alias: string) {
+		const topPage = await this.topPageService.findByAlias(alias);
+		if (!topPage) {
+			throw new NotFoundException(TOP_PAGE_NOT_FOUNT);
+		}
+		return topPage;
+	}
+
 	@UseGuards(JwtAuthGuard)
 	@Delete(':id')
 	async delete(@Param('id', IdValidationPipe) id: string) {
