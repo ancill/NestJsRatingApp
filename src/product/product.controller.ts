@@ -25,12 +25,14 @@ import { ProductService } from './product.service';
 export class ProductController {
 	constructor(private readonly productService: ProductService) {}
 
+	@UseGuards(JwtAuthGuard)
 	@UsePipes(new ValidationPipe())
 	@Post('create')
 	async create(@Body() dto: CreateProductDto) {
 		return this.productService.create(dto);
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Get(':id')
 	async get(@Param('id', IdValidationPipe) id: string) {
 		const product = await this.productService.findById(id);
@@ -49,6 +51,7 @@ export class ProductController {
 		}
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Patch(':id')
 	async patch(@Param('id', IdValidationPipe) id: string, @Body() dto: CreateProductDto) {
 		const updatedProduct = await this.productService.updateById(id, dto);

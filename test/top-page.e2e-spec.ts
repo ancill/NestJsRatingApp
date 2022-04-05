@@ -105,6 +105,16 @@ describe('TopPageController (e2e)', () => {
 			.expect(404);
 	});
 
+	it('/top-page/find (GET) - success', async () => {
+		return request(app.getHttpServer())
+			.post('/top-page/find')
+			.send({ firstCategory: TopLevelCategoryDto.Courses })
+			.expect(200)
+			.then(({ body }: request.Response) => {
+				expect(body[0].alias).toBe('TOP_PRODUCT_ALIAS');
+			});
+	});
+
 	it('/top-page/:id (DELETE) - success', () => {
 		return request(app.getHttpServer())
 			.delete('/top-page/' + createdId)
@@ -120,16 +130,6 @@ describe('TopPageController (e2e)', () => {
 				statusCode: 404,
 				message: TOP_PAGE_NOT_FOUNT,
 				error: 'Not Found',
-			});
-	});
-
-	it('/top-page/find (GET) - success', async () => {
-		return request(app.getHttpServer())
-			.get('/product/find')
-			.send({ firstCategory: TopLevelCategoryDto.Courses })
-			.expect(200)
-			.then(({ body }: request.Response) => {
-				//expect(body.characteristics.length).toBe(2);
 			});
 	});
 
