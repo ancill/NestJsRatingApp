@@ -79,9 +79,10 @@ describe('ReviewController (e2e)', () => {
 	it('/review/byProduct/:productId (GET) - fail', async () => {
 		return request(app.getHttpServer())
 			.get('/review/byProduct/' + new Types.ObjectId().toHexString())
-			.expect(200)
-			.then(({ body }: request.Response) => {
-				expect(body.length).toBe(0);
+			.expect(404, {
+				statusCode: 404,
+				message: REVIEW_NOT_FOUND,
+				error: 'Not Found',
 			});
 	});
 

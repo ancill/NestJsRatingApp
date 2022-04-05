@@ -19,4 +19,8 @@ export class TopPageService {
 	async deleteById(id: string) {
 		return this.topPageModel.findByIdAndDelete(id).exec();
 	}
+
+	async updateById(id: string, dto: CreateTopPageDto) {
+		return this.topPageModel.findByIdAndUpdate(id, dto, { new: true }).exec();
+	}
 }

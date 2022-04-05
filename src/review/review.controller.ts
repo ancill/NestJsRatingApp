@@ -39,8 +39,8 @@ export class ReviewController {
 
 	@Get('byProduct/:productId')
 	async getByProduct(@Param('productId') productId: string, @UserEmail() email: string) {
-		const product = this.reviewService.findByProductId(productId);
-		if (!product) {
+		const product = await this.reviewService.findByProductId(productId);
+		if (!product || product.length === 0) {
 			throw new NotFoundException(REVIEW_NOT_FOUND);
 		}
 		return product;

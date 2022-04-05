@@ -8,9 +8,11 @@ import {
 	Param,
 	Patch,
 	Post,
+	UseGuards,
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { IdValidationPipe } from '../pipes/id-validation.pipe';
 import { CreateTopPageDto } from './dto/create-top-page.dto';
 import { FindTopPageDto } from './dto/find-top-page.dto';
@@ -37,11 +39,23 @@ export class TopPageController {
 		return topPage;
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Delete(':id')
-	async delete(@Param('id', IdValidationPipe) id: string) {}
+	async delete(@Param('id', IdValidationPipe) id: string) {
+		const deletedPage = await this.topPageService.deleteById(id);
+		if (!deletedPage) {
+			throw new NotFoundException(TOP_PAGE_NOT_FOUNT);
+		}
+	}
 
 	@Patch(':id')
-	async patch(@Param('id', IdValidationPipe) id: string, @Body() dto: CreateTopPageDto) {}
+	async patch(@Param('id', IdValidationPipe) id: string, @Body() dto: CreateTopPageDto) {
+		const updatedPage = await this.topPageService.updateById(id, dto);
+		if (!updatedPage) {
+			throw new NotFoundException(TOP_PAGE_NOT_FOUNT);
+		}
+		return updatedPage;
+	}
 
 	@HttpCode(200)
 	@Post()

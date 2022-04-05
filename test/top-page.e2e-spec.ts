@@ -78,6 +78,42 @@ describe('TopPageController (e2e)', () => {
 				error: 'Not Found',
 			});
 	});
+
+	it('/top-page/update (PATCH) - success', async () => {
+		return request(app.getHttpServer())
+			.patch('/top-page/' + createdId)
+			.send({ ...testDto, seoText: 'cool test' })
+			.expect(200)
+			.then(({ body }: request.Response) => {
+				expect(body.seoText).toBe('cool test');
+			});
+	});
+
+	it('/top-page/update (PATCH) - fail', async () => {
+		return request(app.getHttpServer())
+			.patch('/top-page/' + new Types.ObjectId().toHexString())
+			.send({ ...testDto, seoText: 'cool test' })
+			.expect(404);
+	});
+
+	it('/top-page/:id (DELETE) - success', () => {
+		return request(app.getHttpServer())
+			.delete('/top-page/' + createdId)
+			.set('Authorization', 'Bearer ' + token)
+			.expect(200);
+	});
+
+	it('/top-page/:id (DELETE) - fail', () => {
+		return request(app.getHttpServer())
+			.delete('/top-page/' + new Types.ObjectId().toHexString())
+			.set('Authorization', 'Bearer ' + token)
+			.expect(404, {
+				statusCode: 404,
+				message: TOP_PAGE_NOT_FOUNT,
+				error: 'Not Found',
+			});
+	});
+
 	afterAll(() => {
 		disconnect();
 	});
