@@ -114,6 +114,16 @@ describe('TopPageController (e2e)', () => {
 			});
 	});
 
+	it('/product/find (GET) - success', async () => {
+		return request(app.getHttpServer())
+			.get('/product/find')
+			.send({ firstCategory: TopLevelCategoryDto.Courses })
+			.expect(200)
+			.then(({ body }: request.Response) => {
+				//expect(body.characteristics.length).toBe(2);
+			});
+	});
+
 	afterAll(() => {
 		disconnect();
 	});

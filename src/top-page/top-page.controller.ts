@@ -62,6 +62,7 @@ export class TopPageController {
 	@Post('find')
 	async find(@Body() dto: FindTopPageDto) {
 		const foundPage = await this.topPageService.findByCategory(dto);
+		console.log(foundPage);
 		if (!foundPage) {
 			throw new NotFoundException(TOP_PAGE_NOT_FOUNT);
 		}
