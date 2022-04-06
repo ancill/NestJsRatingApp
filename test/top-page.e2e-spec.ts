@@ -93,6 +93,15 @@ describe('TopPageController (e2e)', () => {
 			});
 	});
 
+	it('/top-page/textSearch/:text (GET) - success', async () => {
+		return request(app.getHttpServer())
+			.get('/top-page/textSearch/' + 'page')
+			.expect(200)
+			.then(({ body }: request.Response) => {
+				expect(body[0].title).toBe('Top page Test');
+			});
+	});
+
 	it('/top-page/update (PATCH) - success', async () => {
 		return request(app.getHttpServer())
 			.patch('/top-page/' + createdId)
@@ -122,15 +131,6 @@ describe('TopPageController (e2e)', () => {
 				expect(body[0].alias).toBe('TOP_PRODUCT_ALIAS');
 			});
 	});
-
-	// it('/top-page/textSearch/:text (GET) - success', async () => {
-	// 	return request(app.getHttpServer())
-	// 		.post('/top-page/textSearch/' + 'frontend')
-	// 		.expect(200)
-	// 		.then(({ body }: request.Response) => {
-	// 			//expect(body[0].alias).toBe('TOP_PRODUCT_ALIAS');
-	// 		});
-	// });
 
 	it('/top-page/:id (DELETE) - success', () => {
 		return request(app.getHttpServer())
