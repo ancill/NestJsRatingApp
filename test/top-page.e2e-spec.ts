@@ -13,7 +13,7 @@ const testDto: CreateTopPageDto = {
 	alias: 'TOP_PRODUCT_ALIAS',
 	firstCategory: TopLevelCategoryDto.Courses,
 	secondCategory: 'secondCategory',
-	seoText: 'A lot of text',
+	seoText: 'A lot of text with many frontend quotes',
 	tags: ['Test'],
 	tagsTitle: 'Test',
 	title: 'Top page Test',
@@ -45,6 +45,7 @@ describe('TopPageController (e2e)', () => {
 	it('/top-page/create (POST) - success', async () => {
 		return request(app.getHttpServer())
 			.post('/top-page/create')
+			.set('Authorization', 'Bearer ' + token)
 			.send(testDto)
 			.expect(201)
 			.then(({ body }: request.Response) => {
@@ -56,6 +57,7 @@ describe('TopPageController (e2e)', () => {
 	it('/top-page/create (POST) - fail', () => {
 		return request(app.getHttpServer())
 			.post('/top-page/create')
+			.set('Authorization', 'Bearer ' + token)
 			.send({ ...testDto, category: 42 })
 			.expect(400);
 	});
@@ -63,6 +65,7 @@ describe('TopPageController (e2e)', () => {
 	it('/top-page/:id (GET) - success', async () => {
 		return request(app.getHttpServer())
 			.get('/top-page/' + createdId)
+			.set('Authorization', 'Bearer ' + token)
 			.expect(200)
 			.then(({ body }: request.Response) => {
 				expect(body.advantages.length).toBe(1);
@@ -72,6 +75,7 @@ describe('TopPageController (e2e)', () => {
 	it('/top-page/:id (GET) - fail', async () => {
 		return request(app.getHttpServer())
 			.get('/top-page/' + new Types.ObjectId().toHexString())
+			.set('Authorization', 'Bearer ' + token)
 			.expect(404, {
 				statusCode: 404,
 				message: TOP_PAGE_NOT_FOUNT,
@@ -82,6 +86,7 @@ describe('TopPageController (e2e)', () => {
 	it('/top-page/byAlias/:alias (GET) - success', async () => {
 		return request(app.getHttpServer())
 			.get('/top-page/byAlias/' + 'TOP_PRODUCT_ALIAS')
+			.set('Authorization', 'Bearer ' + token)
 			.expect(200)
 			.then(({ body }: request.Response) => {
 				expect(body.firstCategory).toBe(TopLevelCategoryDto.Courses);
@@ -91,6 +96,7 @@ describe('TopPageController (e2e)', () => {
 	it('/top-page/update (PATCH) - success', async () => {
 		return request(app.getHttpServer())
 			.patch('/top-page/' + createdId)
+			.set('Authorization', 'Bearer ' + token)
 			.send({ ...testDto, seoText: 'cool test' })
 			.expect(200)
 			.then(({ body }: request.Response) => {
@@ -101,6 +107,7 @@ describe('TopPageController (e2e)', () => {
 	it('/top-page/update (PATCH) - fail', async () => {
 		return request(app.getHttpServer())
 			.patch('/top-page/' + new Types.ObjectId().toHexString())
+			.set('Authorization', 'Bearer ' + token)
 			.send({ ...testDto, seoText: 'cool test' })
 			.expect(404);
 	});
@@ -108,12 +115,22 @@ describe('TopPageController (e2e)', () => {
 	it('/top-page/find (GET) - success', async () => {
 		return request(app.getHttpServer())
 			.post('/top-page/find')
+			.set('Authorization', 'Bearer ' + token)
 			.send({ firstCategory: TopLevelCategoryDto.Courses })
 			.expect(200)
 			.then(({ body }: request.Response) => {
 				expect(body[0].alias).toBe('TOP_PRODUCT_ALIAS');
 			});
 	});
+
+	// it('/top-page/textSearch/:text (GET) - success', async () => {
+	// 	return request(app.getHttpServer())
+	// 		.post('/top-page/textSearch/' + 'frontend')
+	// 		.expect(200)
+	// 		.then(({ body }: request.Response) => {
+	// 			//expect(body[0].alias).toBe('TOP_PRODUCT_ALIAS');
+	// 		});
+	// });
 
 	it('/top-page/:id (DELETE) - success', () => {
 		return request(app.getHttpServer())

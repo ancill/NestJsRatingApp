@@ -55,6 +55,7 @@ describe('ProductController (e2e)', () => {
 	it('/product/create (POST) - success', async () => {
 		return request(app.getHttpServer())
 			.post('/product/create')
+			.set('Authorization', 'Bearer ' + token)
 			.send(testDto)
 			.expect(201)
 			.then(({ body }: request.Response) => {
@@ -66,6 +67,7 @@ describe('ProductController (e2e)', () => {
 	it('/product/create (POST) - fail', () => {
 		return request(app.getHttpServer())
 			.post('/product/create')
+			.set('Authorization', 'Bearer ' + token)
 			.send({ ...testDto, oldPrice: 'Cool' })
 			.expect(400);
 	});
@@ -73,6 +75,7 @@ describe('ProductController (e2e)', () => {
 	it('/product/update (PATCH) - success', async () => {
 		return request(app.getHttpServer())
 			.patch('/product/' + createdId)
+			.set('Authorization', 'Bearer ' + token)
 			.send({ ...testDto, advantages: 'USB charger not included' })
 			.expect(200)
 			.then(({ body }: request.Response) => {
@@ -82,6 +85,7 @@ describe('ProductController (e2e)', () => {
 	it('/product/update (PATCH) - fail', async () => {
 		return request(app.getHttpServer())
 			.patch('/product/' + new Types.ObjectId().toHexString())
+			.set('Authorization', 'Bearer ' + token)
 			.send({ ...testDto, advantages: 'USB charger not included' })
 			.expect(404);
 	});
@@ -89,6 +93,7 @@ describe('ProductController (e2e)', () => {
 	it('/product/:id (GET) - success', async () => {
 		return request(app.getHttpServer())
 			.get('/product/' + createdId)
+			.set('Authorization', 'Bearer ' + token)
 			.expect(200)
 			.then(({ body }: request.Response) => {
 				expect(body.characteristics.length).toBe(2);
@@ -98,6 +103,7 @@ describe('ProductController (e2e)', () => {
 	it('/product/:id (GET) - fail', async () => {
 		return request(app.getHttpServer())
 			.get('/product/' + new Types.ObjectId().toHexString())
+			.set('Authorization', 'Bearer ' + token)
 			.expect(404, {
 				statusCode: 404,
 				message: PRODUCT_NOT_FOUND,
@@ -108,6 +114,7 @@ describe('ProductController (e2e)', () => {
 	it('/product/:id (GET) - fail with Bad Request', async () => {
 		return request(app.getHttpServer())
 			.get('/product/' + '412412412')
+			.set('Authorization', 'Bearer ' + token)
 			.expect(400, {
 				statusCode: 400,
 				message: INVALID_VALIDATION_ID,
@@ -126,9 +133,14 @@ describe('ProductController (e2e)', () => {
 		};
 		await request(app.getHttpServer())
 			.post('/review/create')
+			.set('Authorization', 'Bearer ' + token)
 			.send({ ...reviewTestDto, name: 'test 2', rating: 3 })
 			.expect(201);
-		return request(app.getHttpServer()).post('/review/create').send(reviewTestDto).expect(201);
+		return request(app.getHttpServer())
+			.post('/review/create')
+			.set('Authorization', 'Bearer ' + token)
+			.send(reviewTestDto)
+			.expect(201);
 	});
 
 	it('/product/:id (POST) - success', async () => {
@@ -136,6 +148,7 @@ describe('ProductController (e2e)', () => {
 
 		return request(app.getHttpServer())
 			.post('/product/find')
+			.set('Authorization', 'Bearer ' + token)
 			.send(testFindDto)
 			.expect(200)
 			.then(async ({ body }: request.Response) => {
