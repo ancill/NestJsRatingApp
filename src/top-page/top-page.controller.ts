@@ -17,7 +17,6 @@ import { IdValidationPipe } from '../pipes/id-validation.pipe';
 import { CreateTopPageDto } from './dto/create-top-page.dto';
 import { FindTopPageDto } from './dto/find-top-page.dto';
 import { TOP_PAGE_NOT_FOUNT } from './top-page.constants';
-import { TopPageModel } from './top-page.model';
 import { TopPageService } from './top-page.service';
 
 @Controller('top-page')
@@ -73,7 +72,7 @@ export class TopPageController {
 	@HttpCode(200)
 	@Post('find')
 	async find(@Body() dto: FindTopPageDto) {
-		return this.topPageService.findByCategory(dto.firstCategory);
+		return this.topPageService.findByCategoryWithAggregate(dto.firstCategory);
 	}
 
 	@Get('textSearch/:text')

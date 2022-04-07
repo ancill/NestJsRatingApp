@@ -32,7 +32,8 @@ export class TopPageAdvantage {
 
 export interface TopPageModel extends Base {}
 
-// for full text search
+// @index({ '$**': 'text' })  // For search in all fields and nested
+// for full text search title and seoText
 @index({ title: 'text', seoText: 'text' })
 export class TopPageModel extends TimeStamps {
 	@prop({ enum: TopLevelCategory })

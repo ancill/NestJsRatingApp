@@ -1,3 +1,40 @@
 GET http://localhost:3000/api/top-page/textSearch/page
 Authorization: {{token}}
 
+###
+POST http://localhost:3000/api/top-page/find 
+content-type: application/json
+
+{
+	"firstCategory": 0
+}
+
+###
+POST http://localhost:3000/api/top-page/create 
+Authorization: {{token}}
+content-type: application/json
+
+{
+  "advantages":[
+    {
+      "description":"test description",
+      "title":"Test"
+    }
+  ],
+  "category":"Blog",
+  "alias": "C#",
+  "firstCategory":0,
+  "secondCategory":"Development",
+  "seoText":"A lot of text with many frontend quotes",
+  "tags":[
+    "Test"
+  ],
+  "tagsTitle":"Test",
+  "title":"Top page Test",
+  "hh":{
+    "count":3,
+    "juniorSalary":4000,
+    "middleSalary":6000,
+    "seniorSalary":8000
+  }
+}
