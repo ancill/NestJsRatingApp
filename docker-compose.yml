@@ -12,3 +12,14 @@ services:
     volumes:
       - ./mongo-data-4.4:/data/db
     command: --wiredTigerCacheSizeGB 1.5
+
+version: '3'
+services:
+  top.api:
+    image: top-api:latest
+    container_name: top-api
+    restart: always
+    ports:
+      - 3000:3000
+    valumes: 
+      - ./.env:/opt/app/.env
