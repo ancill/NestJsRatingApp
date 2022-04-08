@@ -1,4 +1,4 @@
-POST http://localhost:3000/api/auth/login
+POST http://188.134.71.182:3001/api/auth/login
 content-type: application/json
 
 {
@@ -15,4 +15,3 @@ content-type: application/json
 	"login": "a2s@gmail.com",
 	"password": "1"
 }
-
