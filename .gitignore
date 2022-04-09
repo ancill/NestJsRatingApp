@@ -36,3 +36,6 @@ lerna-debug.log*
 
 # Docker
 /mongo-data-4.4
+
+# Docktor.js
+.clinic
