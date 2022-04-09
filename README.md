@@ -9,6 +9,7 @@
    docker-compose up -d
    docker ps
    docker stop mongo
+   docker build -t top-api .
 ```
 
 ### Install typegoose for nestjs
