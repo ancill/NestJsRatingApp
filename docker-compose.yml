@@ -1,32 +1,14 @@
 version: '3'
 services:
-  mongo-dev:
-    image: mongo
+  mongo:
+    image: mongo:4.4.4
+    container_name: mongo
     restart: always
-    container_name: mongo-top-api
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo-data-4.4:/data/db
     command: --wiredTigerCacheSizeGB 1.5
-  # top.api:
-  #   image: top-api:latest
-  #   container_name: top-api
-  #   restart: always
-  #   ports:
-  #     - 3000:3000
-  #   network_mode: host
-  #   volumes:
-  #     - ./.env:/opt/app/.env
-
-  # mongo-express-dev:
-  #   image: mongo-express
-  #   container_name: mongo-express-top-api
-  #   restart: always
-  #   ports:
-  #     - 3001:3001
-  #   network_mode: host
-  #   environment:
-  #     ME_CONFIG_MONGODB_ADMINUSERNAME: admin
-  #     ME_CONFIG_MONGODB_ADMINPASSWORD: admin
-  #     ME_CONFIG_MONGODB_ENABLE_ADMIN: true
-  #     ME_CONFIG_MONGODB_URL: mongodb://admin:admin@127.0.0.1:27017/
