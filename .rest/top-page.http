@@ -1,4 +1,4 @@
-GET http://localhost:3000/api/top-page/textSearch/page
+GET http://localhost:27017/api/top-page/textSearch/page
 Authorization: {{token}}
 
 ###
